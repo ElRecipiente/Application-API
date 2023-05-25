@@ -29,4 +29,8 @@ body {
 .bold {
   font-weight: 700;
 }
+
+.red {
+  color: red;
+}
 </style>

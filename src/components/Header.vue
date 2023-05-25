@@ -1,11 +1,14 @@
 <script setup>
-import { ref } from 'vue';
+import axios from 'axios'
+import { onMounted, ref } from 'vue'
 
-const user = ref({
-    firstname: 'Prénom',
-    lastname: 'Nom',
-    credit: 999
+onMounted(() => {
+    const id = 3;
+    axios.get(`http://localhost:8080/api/users?id=${id}`)
+        .then(response => user.value = response.data)
 })
+
+const user = ref([])
 </script>
 
 <template>
@@ -13,8 +16,8 @@ const user = ref({
         <img class="logo" src="../assets/img/Logo_OFP.png" alt="Logo">
         <div class="profil">
             <div class="profil_info">
-                <p>{{ user.firstname }} {{ user.lastname }}</p>
-                <p><span class="bold">{{ user.credit }}</span> Crédits</p>
+                <p>{{ user.username }}</p>
+                <p>Crédits : <span class="bold">{{ user.budget }} $</span></p>
             </div>
             <img class="profil_pic" src="../assets/img/portrait-300x300.jpg" alt="">
             <img class="exit_door" src="../assets/img/door-open-solid.svg" alt="">
@@ -24,7 +27,7 @@ const user = ref({
 
 <style lang="scss" scoped>
 .header {
-    background: #181A3D;
+    background: black;
     position: fixed;
     top: 0;
     display: flex;
@@ -32,6 +35,7 @@ const user = ref({
     align-items: center;
     width: 100%;
     padding: 1em;
+    box-shadow: 0 0 12px black;
 
     .logo {
         width: 50px;

@@ -14,7 +14,7 @@
 
 <style lang="scss" scoped>
 .footer {
-    background: #181A3D;
+    background: black;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -22,6 +22,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    box-shadow: 0 0 12px black;
 
     img {
         width: 25px;
