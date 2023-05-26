@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { store } from './store'
 
 onMounted(() => {
     const id = 3;
@@ -9,6 +10,35 @@ onMounted(() => {
 })
 
 const user = ref([])
+const menu = ref(false)
+const notification = ref(false)
+
+watch(() => store.count, async () => {
+    console.log('HIT')
+    const id = 3;
+    axios.get(`http://localhost:8080/api/users?id=${id}`)
+        .then(response => {
+            user.value = response.data
+            console.log('Crédits actualisés')
+        })
+    if (!notification.value) {
+        notification.value = !notification.value
+    }
+})
+
+function toggleMenu() {
+    menu.value = !menu.value
+}
+
+function killNotification() {
+    if (notification.value) {
+        notification.value = !notification.value
+        store.count = 0
+    }
+
+}
+
+
 </script>
 
 <template>
@@ -19,8 +49,18 @@ const user = ref([])
                 <p>{{ user.username }}</p>
                 <p>Crédits : <span class="bold">{{ user.budget }} $</span></p>
             </div>
-            <img class="profil_pic" src="../assets/img/portrait-300x300.jpg" alt="">
-            <img class="exit_door" src="../assets/img/door-open-solid.svg" alt="">
+            <picture>
+                <img @click="toggleMenu()" class="profil_pic" src="../assets/img/portrait-300x300.jpg"
+                    alt="your profil picture">
+                <div class="notification" v-if="notification"></div>
+
+            </picture>
+            <div class="menu" v-if="menu">
+                <p class="notif_achat" v-if="notification" @click="killNotification()">Vous avez acheté {{ store.count }}
+                    articles. Cliquez pour fermer.</p>
+                <p class="notif_achat" v-else>Pas de notifications.</p>
+                <a class="red" href="">Déconnexion</a>
+            </div>
         </div>
     </header>
 </template>
@@ -36,6 +76,7 @@ const user = ref([])
     width: 100%;
     padding: 1em;
     box-shadow: 0 0 12px black;
+    font-size: 12px;
 
     .logo {
         width: 50px;
@@ -43,17 +84,49 @@ const user = ref([])
 
     .profil {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         width: 50%;
+        gap: 1em;
 
-        .profil_pic {
-            width: 40px;
-            border-radius: 50%;
+        picture {
+            position: relative;
+
+            .profil_pic {
+                width: 40px;
+                border-radius: 50%;
+            }
+
+            .notification {
+                position: absolute;
+                background-color: red;
+                border-radius: 50%;
+                width: 10px;
+                height: 10px;
+                top: 0;
+                right: 0;
+            }
+        }
+
+        .menu {
+            display: flex;
+            flex-flow: column;
+            gap: 1em;
+            position: absolute;
+            right: 1em;
+            top: 110%;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 1em;
+            padding: 1em;
+            width: 100px;
+            text-align: center;
+
+            &>* {
+                text-align: start;
+            }
         }
 
         .profil_info {
-            font-size: 12px;
             font-weight: 400;
             text-align: center;
         }

@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
+import { store } from './store'
 
 onMounted(() => {
     axios.get('http://localhost:8080/api/products')
@@ -25,8 +26,6 @@ const title2 = ref('Nos pâtisseries et boissons')
 const srcImg = ref('src/assets/img/')
 const articles = ref([])
 
-
-
 </script>
 
 
@@ -41,7 +40,8 @@ const articles = ref([])
             <div>
                 <p v-if="article.quantity > 0">{{ article.price }} $</p>
                 <p v-else class="red">Rupture</p>
-                <button class="button" v-if="article.quantity > 0" @click="consume(article)">Acheter</button>
+                <button class="button" v-if="article.quantity > 0"
+                    @click="consume(article), store.increment()">Acheter</button>
             </div>
 
         </article>
@@ -57,6 +57,7 @@ section {
     align-items: center;
     gap: 1.5em;
     padding: 80px 0;
+    font-size: 12px;
 
     h1 {
         text-align: center;
@@ -72,7 +73,6 @@ section {
     }
 
     input {
-        font-size: 12px;
         text-align: center;
         font-weight: 300;
         height: 30px;
@@ -89,7 +89,6 @@ section {
         width: 150px;
         height: 150px;
         text-align: center;
-        font-size: 12px;
         background: white;
         color: black;
         border-radius: 1em;
