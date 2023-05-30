@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from 'vue'
 import { store } from './store'
 
 onMounted(() => {
-    const id = 3;
+    const id = store.userID;
     axios.get(`http://localhost:8080/api/users?id=${id}`)
         .then(response => user.value = response.data)
 })
@@ -16,7 +16,7 @@ const notification = ref(false)
 // Watcher qui regarde si la valeur de count change
 watch(() => store.count, async () => {
     console.log('HIT')
-    const id = 3;
+    const id = store.userID;
     axios.get(`http://localhost:8080/api/users?id=${id}`)
         .then(response => {
             user.value = response.data

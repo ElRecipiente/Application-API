@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { store } from './store'
 
 onMounted(() => {
@@ -8,9 +8,14 @@ onMounted(() => {
         .then(response => articles.value = response.data)
 })
 
+watch(() => store.inputData, async () => {
+    axios.get('http://localhost:8080/api/products')
+        .then(response => articles.value = response.data.filter((article) => article.name.toLowerCase().includes(store.inputData)))
+})
+
 async function consume(article) {
 
-    let userid = 3;
+    let userid = store.userID;
 
     axios.get(`http://localhost:8080/api/product/consume?id=${article.id}&userid=${userid}`)
         .then(response => {
@@ -23,9 +28,6 @@ async function consume(article) {
 
 const srcImg = ref('src/assets/img/')
 const articles = ref([])
-const filteredArticles = computed(() => {
-
-})
 
 </script>
 
