@@ -13,6 +13,7 @@ const user = ref([])
 const menu = ref(false)
 const notification = ref(false)
 
+// Watcher qui regarde si la valeur de count change
 watch(() => store.count, async () => {
     console.log('HIT')
     const id = 3;
@@ -21,21 +22,23 @@ watch(() => store.count, async () => {
             user.value = response.data
             console.log('Crédits actualisés')
         })
+    //si il n'y a pas de notif, on en met une
     if (!notification.value) {
         notification.value = !notification.value
     }
 })
 
+//function qui affiche ou non le menu
 function toggleMenu() {
     menu.value = !menu.value
 }
 
+// function pour supprimer les notifs et remettre count à 0
 function killNotification() {
     if (notification.value) {
         notification.value = !notification.value
         store.count = 0
     }
-
 }
 
 
