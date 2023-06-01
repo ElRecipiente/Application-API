@@ -10,8 +10,8 @@ function toggleHeart() {
 <template>
     <footer class="footer">
 
-        <a href="#" class="icon"><img src="../assets/img/house-chimney-solid.svg" alt=""></a>
-        <a href="#" class="icon"><img src="../assets/img/user-solid.svg" alt=""></a>
+        <a href="/" class="icon"><img src="../assets/img/house-chimney-solid.svg" alt=""></a>
+        <a href="/" class="icon"><img src="../assets/img/user-solid.svg" alt=""></a>
         <a @click="toggleHeart()" v-if="!store.heart" href="#" class="icon"><svg xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path fill="#FFFFFF"
@@ -28,6 +28,7 @@ function toggleHeart() {
 
 <style lang="scss" scoped>
 .footer {
+    z-index: 100;
     background: black;
     position: fixed;
     bottom: 0;

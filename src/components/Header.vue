@@ -70,6 +70,7 @@ function killNotification() {
 
 <style lang="scss" scoped>
 .header {
+    z-index: 100;
     background: black;
     position: fixed;
     top: 0;

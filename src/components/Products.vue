@@ -26,14 +26,49 @@ async function consume(article) {
         })
 }
 
+async function changeFavorite(article) {
+
+    let userid = store.userID;
+
+    axios.get(`http://localhost:8080/api/product/favorite?productid=${article.id}&userid=${userid}`)
+        .then(response => {
+
+            isFavorite.value = response.data
+            console.log(isFavorite.name)
+
+        })
+}
+
+async function areTheyFavorite() {
+
+    let userid = store.userID;
+
+    axios.get(`http://localhost:8080/api/favorite?userid=${userid}`)
+        .then(response => {
+
+            isFavorite.value = response.data
+            console.log(isFavorite.name)
+
+        })
+}
+
 const srcImg = ref('src/assets/img/')
 const articles = ref([])
+const isFavorite = ref([])
+
+areTheyFavorite();
+
 
 </script>
 
 <template>
     <article v-for='article in articles' :key="article.id">
-        <picture><img :src="srcImg + article.img" alt=""></picture>
+        <picture><img :src="srcImg + article.img" alt="">
+            <img v-if="isFavorite.name == article.name" @click="changeFavorite(article)" class="favorite"
+                src="../assets/img/heart-solid-like.svg" alt="">
+            <img v-else @click="changeFavorite(article)" class="favorite" src="../assets/img/heart-solid-like-red.svg"
+                alt="">
+        </picture>
         <h3>{{ article.name }}</h3>
         <div>
             <p v-if="article.quantity > 0">{{ article.price }} $</p>
@@ -58,12 +93,20 @@ article {
     gap: 1em;
 
     picture {
+        position: relative;
         max-height: 50%;
         overflow: hidden;
 
         img {
             width: 100%;
             border-radius: 1em 1em 0 0;
+        }
+
+        .favorite {
+            position: absolute;
+            width: 20px;
+            top: 0.5em;
+            right: 0.5em;
         }
     }
 
