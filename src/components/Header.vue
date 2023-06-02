@@ -15,7 +15,6 @@ const notification = ref(false)
 
 // Watcher qui regarde si la valeur de count change
 watch(() => store.count, async () => {
-    console.log('HIT')
     const id = store.userID;
     axios.get(`http://localhost:8080/api/users?id=${id}`)
         .then(response => {

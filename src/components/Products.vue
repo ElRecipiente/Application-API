@@ -3,71 +3,57 @@ import axios from 'axios'
 import { onMounted, ref, watch } from 'vue'
 import { store } from './store'
 
+const srcImg = ref('src/assets/img/')
+const articles = ref([])
+const userid = store.userID
+
 onMounted(() => {
-    axios.get('http://localhost:8080/api/products')
-        .then(response => articles.value = response.data)
+    axios.get(`http://localhost:8080/api/products?userid=${userid}`)
+        .then(response => {
+            console.log(response)
+            store.articles = response.data
+            articles.value = store.articles
+        })
 })
 
-watch(() => store.inputData, async () => {
-    axios.get('http://localhost:8080/api/products')
-        .then(response => articles.value = response.data.filter((article) => article.name.toLowerCase().includes(store.inputData)))
+watch(() => store.inputData, () => {
+    articles.value = store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData))
+})
+
+
+watch(() => store.heart, () => {
+    articles.value = !store.heart ? store.articles : store.articles.filter((article) => article.favori == 1)
 })
 
 async function consume(article) {
 
-    let userid = store.userID;
-
     axios.get(`http://localhost:8080/api/product/consume?id=${article.id}&userid=${userid}`)
-        .then(response => {
-
-            console.log(response)
-            article.quantity = response.data.quantity
-
-        })
+        .then(response => article.quantity = response.data.quantity)
 }
 
+// method qui permet d'ajouter/retirer un favori onclick
 async function changeFavorite(article) {
-
-    let userid = store.userID;
 
     axios.get(`http://localhost:8080/api/product/favorite?productid=${article.id}&userid=${userid}`)
         .then(response => {
-
-            isFavorite.value = response.data
-            console.log(isFavorite.name)
-
+            article.favori = response.data.favori
         })
 }
-
-async function areTheyFavorite() {
-
-    let userid = store.userID;
-
-    axios.get(`http://localhost:8080/api/favorite?userid=${userid}`)
-        .then(response => {
-
-            isFavorite.value = response.data
-            console.log(isFavorite.name)
-
-        })
-}
-
-const srcImg = ref('src/assets/img/')
-const articles = ref([])
-const isFavorite = ref([])
-
-areTheyFavorite();
-
 
 </script>
 
 <template>
     <article v-for='article in articles' :key="article.id">
         <picture><img :src="srcImg + article.img" alt="">
-            <img v-if="isFavorite.name == article.name" @click="changeFavorite(article)" class="favorite"
-                src="../assets/img/heart-solid-like.svg" alt="">
-            <img v-else @click="changeFavorite(article)" class="favorite" src="../assets/img/heart-solid-like-red.svg"
-                alt="">
+
+            <!---------- AFFICHE LES FAVORIS ---------------------------------------------------------------->
+            <img v-if="article.favori" @click="changeFavorite(article)" class="favorite"
+                src="../assets/img/heart-solid-like-red.svg" alt="">
+
+            <!---------- OU PAS ----------------------------------------------------------------------------->
+            <img v-else @click="changeFavorite(article)" class="favorite" src="../assets/img/heart-solid-like.svg" alt="">
+            <!-- ----------------------------------------------------------------------------------------- -->
+
         </picture>
         <h3>{{ article.name }}</h3>
         <div>
