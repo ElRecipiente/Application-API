@@ -16,24 +16,33 @@ onMounted(() => {
         })
 })
 
+// watch la valeur de l'input SearchBar
 watch(() => store.inputData, () => {
-    articles.value = store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData))
+    if (store.heart) {
+        articles.value = store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()) && article.favori == 1)
+    } else {
+        articles.value = store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()))
+    }
 })
 
-
+// watch si les favoris sont filtrés
 watch(() => store.heart, () => {
-    articles.value = !store.heart ? store.articles : store.articles.filter((article) => article.favori == 1)
+    if (store.inputData == '') {
+        articles.value = !store.heart ? store.articles
+            : store.articles.filter((article) => article.favori == 1)
+    } else {
+        articles.value = !store.heart ? store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()))
+            : store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()) && article.favori == 1)
+    }
 })
 
 async function consume(article) {
-
     axios.get(`http://localhost:8080/api/product/consume?id=${article.id}&userid=${userid}`)
         .then(response => article.quantity = response.data.quantity)
 }
 
 // method qui permet d'ajouter/retirer un favori onclick
 async function changeFavorite(article) {
-
     axios.get(`http://localhost:8080/api/product/favorite?productid=${article.id}&userid=${userid}`)
         .then(response => {
             article.favori = response.data.favori

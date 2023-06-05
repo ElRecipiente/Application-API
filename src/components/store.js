@@ -2,7 +2,7 @@ import { reactive, ref } from 'vue'
 
 export const store = reactive({
     // stock userID after connexion
-    userID: ref(2),
+    userID: ref(3),
     // stock favorite info
     heart: ref(false),
     articles: ref([]),
