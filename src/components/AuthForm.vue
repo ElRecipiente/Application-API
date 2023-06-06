@@ -1,12 +1,11 @@
 <script setup>
 
 
-// store.token =  
 
 </script>
 
 <template>
-    <form action="" method="POST">
+    <form action="localhost:8080/auth" method="POST">
         <label for="username">Identifiant</label>
         <input type="text" name="username" id="username">
         <label for="password">Mot de passe</label>
