@@ -61,7 +61,7 @@ function killNotification() {
                 <p class="notif_achat" v-if="notification" @click="killNotification()">Vous avez acheté {{ store.count }}
                     articles. Cliquez pour fermer.</p>
                 <p class="notif_achat" v-else>Pas de notifications.</p>
-                <a class="red" href="">Déconnexion</a>
+                <a class="red" href="/auth">Déconnexion</a>
             </div>
         </div>
     </header>

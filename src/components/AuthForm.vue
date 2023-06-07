@@ -1,17 +1,31 @@
 <script setup>
+import { ref } from 'vue';
+import axios from 'axios'
+import { store } from './store';
 
+const username = ref('')
+const password = ref('')
 
-// store.token =  
+async function newPost() {
+    axios.post('http://localhost:8080/api/auth', {
+        username: username,
+        password: password
+    })
+        .then(response => { console.log(response) })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
 </script>
 
 <template>
-    <form action="" method="POST">
+    <form @submit.prevent="newPost()">
         <label for="username">Identifiant</label>
-        <input type="text" name="username" id="username">
+        <input type="text" v-model="username" name="username" id="username">
         <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password">
-        <button>Envoyer</button>
+        <input type="password" v-model="password" name="password" id="password">
+        <button type="submit">Envoyer</button>
     </form>
 </template>
 
