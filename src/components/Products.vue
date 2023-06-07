@@ -56,7 +56,7 @@ async function changeFavorite(article) {
         <picture><img :src="srcImg + article.img" alt="">
 
             <!---------- AFFICHE LES FAVORIS ---------------------------------------------------------------->
-            <img v-if="article.favori" @click="changeFavorite(article)" class="favorite"
+            <img v-if="article.favori == 1" @click="changeFavorite(article)" class="favorite"
                 src="../assets/img/heart-solid-like-red.svg" alt="">
 
             <!---------- OU PAS ----------------------------------------------------------------------------->
