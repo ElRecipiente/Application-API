@@ -1,14 +1,13 @@
 <script setup>
 import axios from 'axios'
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { store } from './store'
 
 const srcImg = ref('src/assets/img/')
 const articles = ref([])
-const userid = store.userID
 
 onMounted(() => {
-    axios.get(`http://localhost:8080/api/products?userid=${userid}`)
+    axios.get(`http://localhost:8080/api/products?userid=${store.userID}`)
         .then(response => {
             console.log(response)
             store.articles = response.data
@@ -16,7 +15,7 @@ onMounted(() => {
         })
 })
 
-// watch la valeur de l'input SearchBar
+// watch la valeur de l'input SearchBar, et filtre ou non
 watch(() => store.inputData, () => {
     if (store.heart) {
         articles.value = store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()) && article.favori == 1)
@@ -25,7 +24,7 @@ watch(() => store.inputData, () => {
     }
 })
 
-// watch si les favoris sont filtrés
+// watch si les favoris sont filtré, et filtre ou non
 watch(() => store.heart, () => {
     if (store.inputData == '') {
         articles.value = !store.heart ? store.articles
@@ -37,16 +36,20 @@ watch(() => store.heart, () => {
 })
 
 async function consume(article) {
-    axios.get(`http://localhost:8080/api/product/consume?id=${article.id}&userid=${userid}`)
+    axios.get(`http://localhost:8080/api/product/consume?id=${article.id}&userid=${store.userID}`)
         .then(response => article.quantity = response.data.quantity)
 }
 
 // method qui permet d'ajouter/retirer un favori onclick
 async function changeFavorite(article) {
-    axios.get(`http://localhost:8080/api/product/favorite?productid=${article.id}&userid=${userid}`)
+    axios.get(`http://localhost:8080/api/product/favorite?productid=${article.id}&userid=${store.userID}`)
         .then(response => {
             article.favori = response.data.favori
         })
+}
+
+function pushItemInList(article) {
+    store.list.push(article)
 }
 
 </script>
@@ -68,7 +71,8 @@ async function changeFavorite(article) {
         <div>
             <p v-if="article.quantity > 0">{{ article.price }} $</p>
             <p v-else class="red">Rupture</p>
-            <button class="button" v-if="article.quantity > 0" @click="consume(article), store.increment()">Acheter</button>
+            <button class="button" v-if="article.quantity > 0"
+                @click="consume(article), store.increment(), pushItemInList(article)">Acheter</button>
         </div>
     </article>
 </template>
@@ -118,7 +122,7 @@ article {
         .button {
             text-decoration: none;
             border: none;
-            background: #181a3dde;
+            background: green;
             color: white;
             padding: 0.5em;
             border-radius: 1em;

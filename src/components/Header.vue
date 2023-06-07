@@ -2,10 +2,12 @@
 import axios from 'axios'
 import { onMounted, ref, watch } from 'vue'
 import { store } from './store'
+import { useRouter } from "vue-router"
+
+const router = useRouter()
 
 onMounted(() => {
-    const id = store.userID;
-    axios.get(`http://localhost:8080/api/users?id=${id}`)
+    axios.get(`http://localhost:8080/api/users?id=${store.userID}`)
         .then(response => user.value = response.data)
 })
 
@@ -36,7 +38,9 @@ function toggleMenu() {
 function killNotification() {
     if (notification.value) {
         notification.value = !notification.value
+        menu.value = !menu.value
         store.count = 0
+        router.push({ path: '/details' })
     }
 }
 

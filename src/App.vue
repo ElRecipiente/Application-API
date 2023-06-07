@@ -2,12 +2,13 @@
 import { RouterView } from 'vue-router'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import { store } from './components/store';
 </script>
 
 <template>
-  <Header />
+  <Header v-if="store.userID !== null" />
   <RouterView />
-  <Footer />
+  <Footer v-if="store.userID !== null" />
 </template>
 
 <style lang="scss">

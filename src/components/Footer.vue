@@ -1,13 +1,24 @@
 <script setup>
 import { store } from './store';
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
+function goHome() {
+    router.push({ path: "/" })
+}
+
+function showDetails() {
+    router.push({ path: "/details" })
+}
 
 </script>
 
 <template>
     <footer class="footer">
 
-        <a href="/" class="icon"><img src="../assets/img/house-chimney-solid.svg" alt=""></a>
-        <a href="/" class="icon"><img src="../assets/img/user-solid.svg" alt=""></a>
+        <a @click="goHome()" class="icon"><img src="../assets/img/house-chimney-solid.svg" alt=""></a>
+        <a @click="showDetails()" class="icon"><img src="../assets/img/user-solid.svg" alt=""></a>
         <a @click="store.toggleHeart()" v-if="!store.heart" href="#" class="icon"><svg xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <path fill="#FFFFFF"
