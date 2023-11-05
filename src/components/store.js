@@ -1,23 +1,24 @@
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 
 export const store = reactive({
-    // message info
-    message: ref(''),
+    // info message
+    message: '',
     // stock userID after connexion
-    userID: ref(null),
+    userID: null,
     // stock favorite info
-    heart: ref(false),
-    // liste des articles
-    articles: ref([]),
-    // liste des items
-    list: ref([]),
+    heart: false,
+    // list of articles
+    articles: [],
+    // list of items
+    list: [],
+    // method to set favorite state
     toggleHeart() {
         this.heart = !this.heart
     },
     // stock input value
-    inputData: ref(''),
+    inputData: '',
     // stock count of product buying
-    count: ref(0),
+    count: 0,
     increment() {
         this.count++
         console.log('Count gagne un niveau !')
