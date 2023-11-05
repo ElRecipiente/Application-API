@@ -6,6 +6,9 @@ import { store } from './components/store';
 </script>
 
 <template>
+  <h3 v-if="store.message !== ''" class="error">
+    {{ store.message }}
+  </h3>
   <Header v-if="store.userID !== null" />
   <RouterView />
   <Footer v-if="store.userID !== null" />
@@ -39,6 +42,13 @@ body {
 a,
 button {
   cursor: pointer;
+}
+
+.error {
+  background-color: red;
+  color: white;
+  text-align: center;
+  padding: 0.5em;
 }
 
 main {

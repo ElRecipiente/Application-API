@@ -15,12 +15,10 @@ async function newPost() {
         password: password.value
     })
         .then(response => {
-            console.log(response.data)
             if (response.data.message) {
                 store.message = response.data.message
             } else {
                 store.userID = response.data.id
-                console.log(store.userID)
                 router.push({ path: "/" })
             }
         })

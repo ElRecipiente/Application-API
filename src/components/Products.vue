@@ -9,29 +9,32 @@ const articles = ref([])
 onMounted(() => {
     axios.get(`http://localhost:8080/api/products?userid=${store.userID}`)
         .then(response => {
-            console.log(response)
             store.articles = response.data
             articles.value = store.articles
         })
 })
 
-// watch la valeur de l'input SearchBar, et filtre ou non
+// watch searchbar value, and filter if requiered
 watch(() => store.inputData, () => {
     if (store.heart) {
-        articles.value = store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()) && article.favori == 1)
+        articles.value = store.articles.filter((article) =>
+            article.name.toLowerCase().includes(store.inputData.toLowerCase()) && article.favori == 1)
     } else {
-        articles.value = store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()))
+        articles.value = store.articles.filter((article) =>
+            article.name.toLowerCase().includes(store.inputData.toLowerCase()))
     }
 })
 
-// watch si les favoris sont filtré, et filtre ou non
+// watch if favorite filter is ON or not, and filter if requiered
 watch(() => store.heart, () => {
     if (store.inputData == '') {
         articles.value = !store.heart ? store.articles
             : store.articles.filter((article) => article.favori == 1)
     } else {
-        articles.value = !store.heart ? store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()))
-            : store.articles.filter((article) => article.name.toLowerCase().includes(store.inputData.toLowerCase()) && article.favori == 1)
+        articles.value = !store.heart ? store.articles.filter((article) =>
+            article.name.toLowerCase().includes(store.inputData.toLowerCase()))
+            : store.articles.filter((article) =>
+                article.name.toLowerCase().includes(store.inputData.toLowerCase()) && article.favori == 1)
     }
 })
 
@@ -59,11 +62,11 @@ function pushItemInList(article) {
         <article v-for='article in articles' :key="article.id">
             <picture><img :src="srcImg + article.img" alt="">
 
-                <!---------- AFFICHE LES FAVORIS ---------------------------------------------------------------->
+                <!---------- IS FAVORITE ---------------------------------------------------------------->
                 <img v-if="article.favori == 1" @click="changeFavorite(article)" class="favorite"
                     src="../assets/img/heart-solid-like-red.svg" alt="">
 
-                <!---------- OU PAS ----------------------------------------------------------------------------->
+                <!---------- OR NOT ----------------------------------------------------------------------------->
                 <img v-else @click="changeFavorite(article)" class="favorite" src="../assets/img/heart-solid-like.svg"
                     alt="">
                 <!-- ----------------------------------------------------------------------------------------- -->

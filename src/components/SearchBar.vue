@@ -6,12 +6,6 @@ const inputData = ref('')
 
 store.inputData = inputData
 
-function checkData() {
-    console.log(store.inputData)
-}
-
-checkData();
-
 </script>
 
 <template>
