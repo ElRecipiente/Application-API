@@ -35,4 +35,75 @@ body {
 .red {
   color: red;
 }
+
+a,
+button {
+  cursor: pointer;
+}
+
+main {
+  width: 95%;
+  margin: 0 auto;
+  padding: 80px 0;
+  font-size: 12px;
+
+  #container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2em;
+    margin: 2em auto 0;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    margin: 1em;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0.5em 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    padding: 120px 0;
+    font-size: 16px;
+
+    #container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  main {
+
+    #container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  main {
+
+    #container {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  main {
+
+    #container {
+      grid-template-columns: repeat(7, 1fr);
+    }
+  }
+}
 </style>

@@ -102,6 +102,7 @@ function killNotification() {
             .profil_pic {
                 width: 40px;
                 border-radius: 50%;
+                cursor: pointer;
             }
 
             .notification {
@@ -130,6 +131,7 @@ function killNotification() {
 
             &>* {
                 text-align: start;
+                cursor: pointer;
             }
         }
 
@@ -140,6 +142,46 @@ function killNotification() {
 
         .exit_door {
             width: 25px;
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .header {
+        font-size: 16px;
+
+        .logo {
+            width: 60px;
+        }
+
+        .profil {
+
+            picture {
+                .profil_pic {
+                    width: 50px;
+                }
+            }
+
+            .menu {
+                width: 200px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .header {
+        .logo {
+            width: 75px;
+        }
+
+        .profil {
+
+            picture {
+                .profil_pic {
+                    width: 60px;
+                }
+            }
         }
     }
 }

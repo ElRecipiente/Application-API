@@ -50,5 +50,9 @@ function showDetails() {
     svg {
         width: 25px;
     }
+
+    a {
+        padding: 0.5em;
+    }
 }
 </style>

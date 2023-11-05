@@ -55,26 +55,29 @@ function pushItemInList(article) {
 </script>
 
 <template>
-    <article v-for='article in articles' :key="article.id">
-        <picture><img :src="srcImg + article.img" alt="">
+    <div id="container">
+        <article v-for='article in articles' :key="article.id">
+            <picture><img :src="srcImg + article.img" alt="">
 
-            <!---------- AFFICHE LES FAVORIS ---------------------------------------------------------------->
-            <img v-if="article.favori == 1" @click="changeFavorite(article)" class="favorite"
-                src="../assets/img/heart-solid-like-red.svg" alt="">
+                <!---------- AFFICHE LES FAVORIS ---------------------------------------------------------------->
+                <img v-if="article.favori == 1" @click="changeFavorite(article)" class="favorite"
+                    src="../assets/img/heart-solid-like-red.svg" alt="">
 
-            <!---------- OU PAS ----------------------------------------------------------------------------->
-            <img v-else @click="changeFavorite(article)" class="favorite" src="../assets/img/heart-solid-like.svg" alt="">
-            <!-- ----------------------------------------------------------------------------------------- -->
+                <!---------- OU PAS ----------------------------------------------------------------------------->
+                <img v-else @click="changeFavorite(article)" class="favorite" src="../assets/img/heart-solid-like.svg"
+                    alt="">
+                <!-- ----------------------------------------------------------------------------------------- -->
 
-        </picture>
-        <h3>{{ article.name }}</h3>
-        <div>
-            <p v-if="article.quantity > 0">{{ article.price }} $</p>
-            <p v-else class="red">Rupture</p>
-            <button class="button" v-if="article.quantity > 0"
-                @click="consume(article), store.increment(), pushItemInList(article)">Acheter</button>
-        </div>
-    </article>
+            </picture>
+            <h3>{{ article.name }}</h3>
+            <div>
+                <p v-if="article.quantity > 0">{{ article.price }} $</p>
+                <p v-else class="red">Rupture</p>
+                <button class="button" v-if="article.quantity > 0"
+                    @click="consume(article), store.increment(), pushItemInList(article)">Acheter</button>
+            </div>
+        </article>
+    </div>
 </template>
 
 <style lang="scss" scoped>
@@ -83,13 +86,14 @@ article {
     flex-flow: column wrap;
     justify-content: flex-start;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     text-align: center;
     background: white;
     color: black;
     border-radius: 1em;
-    gap: 1em;
+    gap: 0.5em;
+    margin: 0 auto;
 
     picture {
         position: relative;
@@ -106,6 +110,7 @@ article {
             width: 20px;
             top: 0.5em;
             right: 0.5em;
+            cursor: pointer;
         }
     }
 
@@ -127,6 +132,27 @@ article {
             padding: 0.5em;
             border-radius: 1em;
         }
+    }
+}
+
+@media screen and (min-width: 375px) {
+    article {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media screen and (min-width: 425px) {
+    article {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    article {
+        width: 220px;
+        height: 220px;
     }
 }
 </style>

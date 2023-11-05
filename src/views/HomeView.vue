@@ -19,29 +19,4 @@ const title2 = ref('Nos pâtisseries et boissons')
     </main>
 </template>
 
-<style lang="scss" scoped>
-main {
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1.5em;
-    padding: 80px 0;
-    font-size: 12px;
-
-    h1 {
-        text-align: center;
-        font-size: 30px;
-        font-weight: 600;
-        margin: 1em;
-    }
-
-    h2 {
-        font-size: 20px;
-        font-weight: 400;
-        width: 90%;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

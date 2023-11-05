@@ -56,6 +56,7 @@ form {
         height: 30px;
         width: 100%;
         border-radius: 1em;
+        padding: 1em;
     }
 
     button {
@@ -68,5 +69,22 @@ form {
         border-radius: 1em;
         margin-top: 2em;
     }
+}
+
+@media screen and (min-width: 768px) {
+    form {
+        width: 50%;
+        margin: 0 auto;
+
+        input {
+            text-align: left;
+            height: 50px;
+        }
+
+        button {
+            width: 200px;
+        }
+    }
+
 }
 </style>
